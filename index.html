@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="My Portfolio">
         <title>My Portfolio</title>
+        <link rel="icon" href="kavin.JPG" type="image/icon type">
         <link rel="stylesheet" href="styles.css">
         <link rel="icon" href="favicon.ico" type="image/x-icon">
         <script src="script.js" defer></script>
@@ -292,7 +293,7 @@
                 </div>
                 <div class="contact-form">
                     <h3>Contact Form</h3>
-                    <form action="#" method="post">
+                    <form method="post" name="portfolio">
                         <label for="name">Your Name:</label>
                         <input type="text" id="name" name="name" required>
                         
@@ -304,6 +305,18 @@
                         
                         <button type="submit">Send</button>
                     </form>
+                    <script>
+                        const scriptURL = 'https://script.google.com/macros/s/AKfycbyupcsomOoveab0ZjNkJwG4mTpVSZe4s94iB8OoutM5SEEVC9ahSirap6R24C3DEVt_/exec'
+                        const form = document.forms['portfolio']
+                        
+                        form.addEventListener('submit', e => {
+                          e.preventDefault()
+                          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                          .then(response => alert("Thank you! your form is submitted successfully." ))
+                          .then(() => {  window.location.reload(); })
+                          .catch(error => console.error('Error!', error.message))
+                        })
+                        </script>
                 </div>
             </div>
         </section>
