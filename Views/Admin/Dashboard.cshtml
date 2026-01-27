@@ -1,0 +1,873 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Portfolio</title>
+    <link rel="stylesheet" href="~/css/modern-design.css">
+    <link rel="stylesheet" href="~/css/themes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+            gap: 0;
+        }
+
+        .sidebar {
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            padding: 2rem 1rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-brand {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .main-content {
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-card .number {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .success-message {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            margin: 0;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <i class="fas fa-chart-line"></i> Dashboard
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#messages" class="tab-link active" data-tab="messages"><i class="fas fa-envelope"></i> Messages</a></li>
+                <li><a href="#education" class="tab-link" data-tab="education"><i class="fas fa-graduation-cap"></i> Education</a></li>
+                <li><a href="#projects" class="tab-link" data-tab="projects"><i class="fas fa-code-branch"></i> Projects</a></li>
+                <li><a href="#certificates" class="tab-link" data-tab="certificates"><i class="fas fa-award"></i> Certificates</a></li>
+                <li><a href="#skills" class="tab-link" data-tab="skills"><i class="fas fa-star"></i> Skills</a></li>
+                <li><a href="#testimonials" class="tab-link" data-tab="testimonials"><i class="fas fa-comments"></i> Testimonials</a></li>
+                <li style="border-top: 1px solid var(--border); margin-top: 1rem; padding-top: 1rem;">
+                    <a href="/Admin/Logout" style="color: var(--danger);"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h1><i class="fas fa-tachometer-alt"></i> Portfolio Dashboard</h1>
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Website
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <i class="fas fa-envelope"></i>
+                    <p>Messages</p>
+                    <div class="number">@Model.Messages.Count</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-book"></i>
+                    <p>Education</p>
+                    <div class="number">@Model.Educations.Count</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-briefcase"></i>
+                    <p>Projects</p>
+                    <div class="number">@Model.Projects.Count</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-award"></i>
+                    <p>Certificates</p>
+                    <div class="number">@Model.Certificates.Count</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <p>Skills</p>
+                    <div class="number">@Model.Skills.Count</div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-comments"></i>
+                    <p>Testimonials</p>
+                    <div class="number">@Model.Testimonials.Count</div>
+                </div>
+            </div>
+
+            <!-- Messages Tab -->
+            <div id="messages" class="tab-content active section">
+                <div class="section-header">
+                    <h2><i class="fas fa-envelope"></i> Contact Messages</h2>
+                </div>
+                @if (Model.Messages.Count > 0)
+                {
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Message</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var msg in Model.Messages.OrderByDescending(m => m.CreatedAt))
+                                {
+                                    <tr>
+                                        <td><strong>@msg.Name</strong></td>
+                                        <td><a href="mailto:@msg.Email" style="color: var(--primary);">@msg.Email</a></td>
+                                        <td>@msg.Message.Substring(0, Math.Min(40, msg.Message.Length))...</td>
+                                        <td>@msg.CreatedAt.ToString("dd MMM yyyy")</td>
+                                        <td>
+                                            <button class="btn btn-sm btn-secondary" onclick="showMessage('@msg.Name.Replace("'", "\\'")', '@msg.Email', '@msg.Message.Replace("'", "\\'").Replace(Environment.NewLine, " ")')">
+                                                <i class="fas fa-eye"></i> View
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No messages received yet
+                    </div>
+                }
+            </div>
+
+            <!-- Education Tab -->
+            <div id="education" class="tab-content section">
+                <div class="section-header">
+                    <h2><i class="fas fa-graduation-cap"></i> Education Records</h2>
+                    <button class="btn btn-primary" onclick="openAddEducation()">
+                        <i class="fas fa-plus"></i> Add Education
+                    </button>
+                </div>
+                <div id="educationMessage"></div>
+                @if (Model.Educations.Count > 0)
+                {
+                    <div class="card-grid">
+                        @foreach (var edu in Model.Educations)
+                        {
+                            <div class="card">
+                                <h3>@edu.Degree</h3>
+                                <p><strong>@edu.InstitutionName</strong></p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                    <i class="fas fa-map-marker-alt"></i> @edu.Location
+                                </p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                                    <i class="fas fa-calendar"></i> @edu.GraduationYear
+                                </p>
+                                <p style="color: var(--success); font-weight: 600;">CGPA: @edu.CGPA</p>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">@edu.FieldOfStudy</p>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No education records added yet
+                    </div>
+                }
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projects" class="tab-content section">
+                <div class="section-header">
+                    <h2><i class="fas fa-code-branch"></i> Projects</h2>
+                    <button class="btn btn-primary" onclick="openAddProject()">
+                        <i class="fas fa-plus"></i> Add Project
+                    </button>
+                </div>
+                <div id="projectMessage"></div>
+                @if (Model.Projects.Count > 0)
+                {
+                    <div class="card-grid">
+                        @foreach (var proj in Model.Projects)
+                        {
+                            <div class="card">
+                                <h3>@proj.Title</h3>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; min-height: 60px;">@proj.Description</p>
+                                @if (!string.IsNullOrEmpty(proj.Technologies))
+                                {
+                                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 0.5rem;">
+                                        <strong>Tech:</strong> @proj.Technologies
+                                    </p>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No projects added yet
+                    </div>
+                }
+            </div>
+
+            <!-- Certificates Tab -->
+            <div id="certificates" class="tab-content section">
+                <div class="section-header">
+                    <h2><i class="fas fa-award"></i> Certificates</h2>
+                    <button class="btn btn-primary" onclick="openAddCertificate()">
+                        <i class="fas fa-plus"></i> Add Certificate
+                    </button>
+                </div>
+                <div id="certificateMessage"></div>
+                @if (Model.Certificates.Count > 0)
+                {
+                    <div class="table-wrapper">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Issued By</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cert in Model.Certificates)
+                                {
+                                    <tr>
+                                        <td><strong>@cert.Title</strong></td>
+                                        <td>@cert.IssuedBy</td>
+                                        <td>@cert.IssueDate</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(cert.CertificateUrl))
+                                            {
+                                                <a href="@cert.CertificateUrl" class="btn btn-sm btn-secondary" target="_blank">
+                                                    <i class="fas fa-external-link-alt"></i> View
+                                                </a>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No certificates added yet
+                    </div>
+                }
+            </div>
+
+            <!-- Skills Tab -->
+            <div id="skills" class="tab-content section">
+                <div class="section-header">
+                    <h2><i class="fas fa-star"></i> Skills</h2>
+                    <button class="btn btn-primary" onclick="openAddSkill()">
+                        <i class="fas fa-plus"></i> Add Skill
+                    </button>
+                </div>
+                <div id="skillMessage"></div>
+                @if (Model.Skills.Count > 0)
+                {
+                    <div class="card-grid">
+                        @foreach (var skill in Model.Skills)
+                        {
+                            <div class="card">
+                                <h3>@skill.Name</h3>
+                                <div style="background: var(--bg-secondary); border-radius: 8px; height: 8px; overflow: hidden; margin: 1rem 0;">
+                                    <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); height: 100%; width: @skill.ProficiencyLevel%;"></div>
+                                </div>
+                                <p style="color: var(--text-secondary); font-size: 0.85rem;">Proficiency: <strong>@skill.ProficiencyLevel%</strong></p>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No skills added yet
+                    </div>
+                }
+            </div>
+
+            <!-- Testimonials Tab -->
+            <div id="testimonials" class="tab-content section">
+                <div class="section-header">
+                    <h2><i class="fas fa-comments"></i> Testimonials</h2>
+                    <button class="btn btn-primary" onclick="openAddTestimonial()">
+                        <i class="fas fa-plus"></i> Add Testimonial
+                    </button>
+                </div>
+                <div id="testimonialMessage"></div>
+                @if (Model.Testimonials.Count > 0)
+                {
+                    <div class="card-grid">
+                        @foreach (var test in Model.Testimonials)
+                        {
+                            <div class="card">
+                                <p style="font-style: italic; margin-bottom: 1rem; color: var(--text-secondary);">
+                                    "<i class="fas fa-quote-left"></i> @test.Content"
+                                </p>
+                                <p><strong>@test.AuthorName</strong></p>
+                                <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.75rem;">@test.AuthorTitle</p>
+                                <span style="background: @(test.IsApproved ? "var(--success)" : "var(--warning)"); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">
+                                    @(test.IsApproved ? "✓ Approved" : "⏳ Pending")
+                                </span>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle"></i> No testimonials added yet
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Message Details</h2>
+                <button class="modal-close" onclick="closeModal('messageModal')">×</button>
+            </div>
+            <div>
+                <p><strong>From:</strong> <span id="modalName"></span></p>
+                <p><strong>Email:</strong> <span id="modalEmail"></span></p>
+                <p><strong>Message:</strong></p>
+                <p id="modalMessage" style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border-left: 3px solid var(--primary); white-space: pre-wrap;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Education Modal -->
+    <div id="addEducationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add Education</h2>
+                <button class="modal-close" onclick="closeModal('addEducationModal')">×</button>
+            </div>
+            <form onsubmit="addEducation(event)">
+                <div class="form-group">
+                    <label class="form-label">Institution Name</label>
+                    <input type="text" id="eduInstitution" class="form-input" placeholder="e.g., University of Technology" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Degree</label>
+                    <input type="text" id="eduDegree" class="form-input" placeholder="e.g., B.Tech in Computer Science" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Field of Study</label>
+                    <input type="text" id="eduField" class="form-input" placeholder="e.g., Computer Science" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Graduation Year</label>
+                    <input type="number" id="eduYear" class="form-input" placeholder="2023" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">CGPA</label>
+                    <input type="text" id="eduCGPA" class="form-input" placeholder="8.5" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Location</label>
+                    <input type="text" id="eduLocation" class="form-input" placeholder="e.g., Mumbai, India" required />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-save"></i> Add Education
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div id="addProjectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add Project</h2>
+                <button class="modal-close" onclick="closeModal('addProjectModal')">×</button>
+            </div>
+            <form onsubmit="addProject(event)">
+                <div class="form-group">
+                    <label class="form-label">Project Title</label>
+                    <input type="text" id="projTitle" class="form-input" placeholder="Project name" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="projDescription" class="form-textarea" placeholder="Project details" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Technologies (comma separated)</label>
+                    <input type="text" id="projTech" class="form-input" placeholder="ASP.NET Core, React, SQL Server" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Project URL</label>
+                    <input type="url" id="projUrl" class="form-input" placeholder="https://example.com" />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">GitHub URL</label>
+                    <input type="url" id="projGithub" class="form-input" placeholder="https://github.com/username/repo" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-save"></i> Add Project
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Certificate Modal -->
+    <div id="addCertificateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add Certificate</h2>
+                <button class="modal-close" onclick="closeModal('addCertificateModal')">×</button>
+            </div>
+            <form onsubmit="addCertificate(event)">
+                <div class="form-group">
+                    <label class="form-label">Certificate Title</label>
+                    <input type="text" id="certTitle" class="form-input" placeholder="e.g., AWS Certified Developer" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Issued By</label>
+                    <input type="text" id="certIssuer" class="form-input" placeholder="e.g., Amazon Web Services" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Issue Date</label>
+                    <input type="date" id="certDate" class="form-input" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Certificate URL</label>
+                    <input type="url" id="certUrl" class="form-input" placeholder="https://..." required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="certDescription" class="form-textarea" placeholder="Details about the certificate"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-save"></i> Add Certificate
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Skill Modal -->
+    <div id="addSkillModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add Skill</h2>
+                <button class="modal-close" onclick="closeModal('addSkillModal')">×</button>
+            </div>
+            <form onsubmit="addSkill(event)">
+                <div class="form-group">
+                    <label class="form-label">Skill Name</label>
+                    <input type="text" id="skillName" class="form-input" placeholder="e.g., ASP.NET Core" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Proficiency Level (%)</label>
+                    <input type="number" id="skillLevel" class="form-input" min="0" max="100" placeholder="85" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Icon (FontAwesome class)</label>
+                    <input type="text" id="skillIcon" class="form-input" placeholder="e.g., fas fa-code" />
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-save"></i> Add Skill
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Testimonial Modal -->
+    <div id="addTestimonialModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus"></i> Add Testimonial</h2>
+                <button class="modal-close" onclick="closeModal('addTestimonialModal')">×</button>
+            </div>
+            <form onsubmit="addTestimonial(event)">
+                <div class="form-group">
+                    <label class="form-label">Author Name</label>
+                    <input type="text" id="testName" class="form-input" placeholder="e.g., John Doe" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Author Title</label>
+                    <input type="text" id="testTitle" class="form-input" placeholder="e.g., CEO at Company" required />
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Testimonial Content</label>
+                    <textarea id="testContent" class="form-textarea" placeholder="What they said about you..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="checkbox-wrapper">
+                        <input type="checkbox" id="testApproved" class="checkbox" />
+                        <span>Approved</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    <i class="fas fa-save"></i> Add Testimonial
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tab Navigation
+        document.querySelectorAll('.tab-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.dataset.tab;
+                
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.tab-link').forEach(l => {
+                    l.classList.remove('active');
+                });
+                
+                document.getElementById(tabId).classList.add('active');
+                this.classList.add('active');
+            });
+        });
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        function openAddEducation() {
+            document.getElementById('addEducationModal').classList.add('active');
+        }
+
+        function openAddProject() {
+            document.getElementById('addProjectModal').classList.add('active');
+        }
+
+        function openAddCertificate() {
+            document.getElementById('addCertificateModal').classList.add('active');
+        }
+
+        function openAddSkill() {
+            document.getElementById('addSkillModal').classList.add('active');
+        }
+
+        function openAddTestimonial() {
+            document.getElementById('addTestimonialModal').classList.add('active');
+        }
+
+        function showMessage(name, email, message) {
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalEmail').textContent = email;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('messageModal').classList.add('active');
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        async function addEducation(event) {
+            event.preventDefault();
+            const data = {
+                institutionName: document.getElementById('eduInstitution').value,
+                degree: document.getElementById('eduDegree').value,
+                fieldOfStudy: document.getElementById('eduField').value,
+                graduationYear: parseInt(document.getElementById('eduYear').value),
+                cgpa: document.getElementById('eduCGPA').value,
+                location: document.getElementById('eduLocation').value
+            };
+
+            try {
+                const response = await fetch('/api/educationapi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('✓ Education added successfully!');
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('✗ Failed to add education');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function addProject(event) {
+            event.preventDefault();
+            const data = {
+                title: document.getElementById('projTitle').value,
+                description: document.getElementById('projDescription').value,
+                technologies: document.getElementById('projTech').value,
+                projectUrl: document.getElementById('projUrl').value,
+                githubUrl: document.getElementById('projGithub').value
+            };
+
+            try {
+                const response = await fetch('/api/projectapi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('✓ Project added successfully!');
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('✗ Failed to add project');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function addCertificate(event) {
+            event.preventDefault();
+            const data = {
+                title: document.getElementById('certTitle').value,
+                issuedBy: document.getElementById('certIssuer').value,
+                issueDate: document.getElementById('certDate').value,
+                certificateUrl: document.getElementById('certUrl').value,
+                description: document.getElementById('certDescription').value
+            };
+
+            try {
+                const response = await fetch('/api/certificateapi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('✓ Certificate added successfully!');
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('✗ Failed to add certificate');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function addSkill(event) {
+            event.preventDefault();
+            const data = {
+                name: document.getElementById('skillName').value,
+                proficiencyLevel: parseInt(document.getElementById('skillLevel').value),
+                icon: document.getElementById('skillIcon').value
+            };
+
+            try {
+                const response = await fetch('/api/skillapi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('✓ Skill added successfully!');
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('✗ Failed to add skill');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+
+        async function addTestimonial(event) {
+            event.preventDefault();
+            const data = {
+                authorName: document.getElementById('testName').value,
+                authorTitle: document.getElementById('testTitle').value,
+                content: document.getElementById('testContent').value,
+                isApproved: document.getElementById('testApproved').checked
+            };
+
+            try {
+                const response = await fetch('/api/testimonialapi', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    alert('✓ Testimonial added successfully!');
+                    setTimeout(() => location.reload(), 500);
+                } else {
+                    alert('✗ Failed to add testimonial');
+                }
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

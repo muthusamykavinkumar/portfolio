@@ -1,0 +1,70 @@
+@model kavinkumar.dev.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Admin Login";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Kavin Kumar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="~/css/login.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-icon">🔐</div>
+                <h1>Admin Panel</h1>
+                <p>Secure access to manage your portfolio</p>
+            </div>
+            
+            <form asp-action="Login" method="post">
+                @if (ViewData.ModelState.Count > 0 && !ViewData.ModelState.IsValid)
+                {
+                    <div class="validation-alert">
+                        <div asp-validation-summary="ModelOnly"></div>
+                    </div>
+                }
+                
+                <div class="form-group">
+                    <label for="Username"><i class="fas fa-user" style="margin-right: 6px;"></i>Username</label>
+                    <div class="input-field">
+                        <i class="fas fa-user input-icon"></i>
+                        <input asp-for="Username" id="Username" type="text" placeholder="Enter username" />
+                    </div>
+                    <span asp-validation-for="Username" class="error-message"></span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="Password"><i class="fas fa-lock" style="margin-right: 6px;"></i>Password</label>
+                    <div class="input-field">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input asp-for="Password" id="Password" type="password" placeholder="Enter password" />
+                    </div>
+                    <span asp-validation-for="Password" class="error-message"></span>
+                </div>
+                
+                <button type="submit" class="login-btn">Sign In →</button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Default Credentials for Testing:</p>
+                <div class="credentials-box">
+                    <strong>Username:</strong> admin<br>
+                    <strong>Password:</strong> admin123
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

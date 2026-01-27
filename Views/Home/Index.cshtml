@@ -1,0 +1,359 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Kavin Kumar - Full Stack Developer";
+}
+
+<div class="hero">
+    <div class="hero-content">
+        <h1>Hi, I'm Kavin Kumar</h1>
+        <p>Full Stack Developer | ASP.NET Core | Cloud Technologies</p>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">
+            Building scalable web applications and exceptional digital experiences
+        </p>
+        <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">
+                <i class="fas fa-code"></i> View My Work
+            </a>
+            <a href="#contact" class="btn btn-outline">
+                <i class="fas fa-envelope"></i> Get in Touch
+            </a>
+            <a href="/Admin/Login" class="btn btn-secondary">
+                <i class="fas fa-lock"></i> Admin Login
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- About Section -->
+<section id="about" class="section">
+    <h2 class="section-title">About Me</h2>
+    <p class="section-subtitle">Get to know me better</p>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+        <div>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                I'm a passionate Full Stack Developer with expertise in building modern web applications. 
+                With experience in ASP.NET Core, C#, and cloud technologies, I create scalable and efficient solutions.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-secondary);">
+                Currently working at Sakthi Infra Tex Pvt Ltd, architecting enterprise solutions and mentoring junior developers.
+            </p>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="https://linkedin.com" class="btn btn-sm btn-primary" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com" class="btn btn-sm btn-primary" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <div style="width: 250px; height: 250px; margin: 0 auto; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+    </div>
+
+    @if (ViewBag.ShowMessage != null)
+    {
+        <div class="alert alert-info" style="margin-top: 2rem;">
+            <i class="fas fa-info-circle"></i>
+            <span>@ViewBag.ShowMessage</span>
+        </div>
+    }
+</section>
+
+<!-- Education Section -->
+<section id="education" class="section" style="background: var(--bg-secondary);">
+    <h2 class="section-title">Education</h2>
+    <p class="section-subtitle">Academic background and qualifications</p>
+    
+    @if (Model?.Educations?.Count > 0)
+    {
+        <div class="card-grid">
+            @foreach (var education in Model.Educations)
+            {
+                <div class="card">
+                    <h3 style="color: var(--primary); margin-bottom: 0.5rem;">
+                        <i class="fas fa-graduation-cap"></i> @education.Degree
+                    </h3>
+                    <p style="font-weight: 600; margin-bottom: 0.5rem;">@education.InstitutionName</p>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 0.5rem;">
+                        <i class="fas fa-calendar"></i> @education.GraduationYear
+                    </p>
+                    <p style="color: var(--text-secondary); font-size: 0.95rem;">
+                        <i class="fas fa-location-dot"></i> @education.Location
+                    </p>
+                    @if (!string.IsNullOrEmpty(education.CGPA.ToString()))
+                    {
+                        <p style="color: var(--success); font-weight: 600; margin-top: 0.5rem;">
+                            CGPA: @education.CGPA
+                        </p>
+                    }
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>No education records added yet. <a href="/Admin/Login">Add from admin panel</a></span>
+        </div>
+    }
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="section">
+    <h2 class="section-title">Featured Projects</h2>
+    <p class="section-subtitle">Showcase of my recent work</p>
+    
+    @if (Model?.Projects?.Count > 0)
+    {
+        <div class="card-grid">
+            @foreach (var project in Model.Projects.Take(6))
+            {
+                <div class="card">
+                    <h3 style="color: var(--primary); margin-bottom: 0.75rem;">
+                        <i class="fas fa-project-diagram"></i> @project.Title
+                    </h3>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem; min-height: 60px;">
+                        @project.Description
+                    </p>
+                    @if (!string.IsNullOrEmpty(project.Technologies))
+                    {
+                        <div style="margin-bottom: 1rem;">
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                                <strong>Tech Stack:</strong>
+                            </p>
+                            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                @foreach (var tech in project.Technologies.Split(','))
+                                {
+                                    <span style="background: var(--bg-secondary); color: var(--text-primary); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem;">
+                                        @tech.Trim()
+                                    </span>
+                                }
+                            </div>
+                        </div>
+                    }
+                    <div style="display: flex; gap: 0.5rem;">
+                        @if (!string.IsNullOrEmpty(project.ProjectUrl))
+                        {
+                            <a href="@project.ProjectUrl" class="btn btn-sm btn-primary" target="_blank">
+                                <i class="fas fa-link"></i> View
+                            </a>
+                        }
+                        @if (!string.IsNullOrEmpty(project.GithubUrl))
+                        {
+                            <a href="@project.GithubUrl" class="btn btn-sm btn-secondary" target="_blank">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>No projects added yet. <a href="/Admin/Login">Add from admin panel</a></span>
+        </div>
+    }
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="section" style="background: var(--bg-secondary);">
+    <h2 class="section-title">Skills & Expertise</h2>
+    <p class="section-subtitle">Technologies and tools I work with</p>
+    
+    @if (Model?.Skills?.Count > 0)
+    {
+        <div class="card-grid">
+            @foreach (var skill in Model.Skills)
+            {
+                <div class="card">
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                        <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>@skill.Name</h3>
+                    </div>
+                    <div style="background: var(--bg-secondary); border-radius: 8px; height: 8px; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); height: 100%; width: @skill.ProficiencyLevel%; transition: width 0.5s ease;"></div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                        Proficiency: @skill.ProficiencyLevel%
+                    </p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>No skills added yet. <a href="/Admin/Login">Add from admin panel</a></span>
+        </div>
+    }
+</section>
+
+<!-- Certificates Section -->
+<section id="certificate" class="section">
+    <h2 class="section-title">Certifications</h2>
+    <p class="section-subtitle">Professional certifications and achievements</p>
+    
+    @if (Model?.Certificates?.Count > 0)
+    {
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAllCerts" class="checkbox" /></th>
+                        <th>Certificate</th>
+                        <th>Issued By</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var cert in Model.Certificates)
+                    {
+                        <tr>
+                            <td><input type="checkbox" class="cert-checkbox checkbox" /></td>
+                            <td><strong>@cert.Title</strong></td>
+                            <td>@cert.IssuedBy</td>
+                            <td>@cert.IssueDate</td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(cert.CertificateUrl))
+                                {
+                                    <a href="@cert.CertificateUrl" class="btn btn-sm btn-primary" target="_blank">
+                                        <i class="fas fa-external-link-alt"></i> View
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+            <button id="selectAllCertsBtn" class="btn btn-sm btn-secondary" onclick="selectAll('cert')">
+                <i class="fas fa-check-double"></i> Select All
+            </button>
+            <button id="unselectAllCertsBtn" class="btn btn-sm btn-secondary" onclick="unselectAll('cert')">
+                <i class="fas fa-times"></i> Unselect All
+            </button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>No certificates added yet. <a href="/Admin/Login">Add from admin panel</a></span>
+        </div>
+    }
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="section" style="background: var(--bg-secondary);">
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-subtitle">Have a question or want to work together?</p>
+    
+    @if (ViewBag.ContactSuccess != null)
+    {
+        <div class="alert alert-success" style="margin-bottom: 2rem;">
+            <i class="fas fa-check-circle"></i>
+            <span>@ViewBag.ContactSuccess</span>
+        </div>
+    }
+
+    @if (ViewBag.ContactError != null)
+    {
+        <div class="alert alert-danger" style="margin-bottom: 2rem;">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>@ViewBag.ContactError</span>
+        </div>
+    }
+
+    <div style="max-width: 600px; margin: 0 auto;">
+        <form method="post" action="/Contact/Send">
+            <div class="form-group">
+                <label class="form-label">Your Name</label>
+                <input type="text" name="Name" class="form-input" placeholder="John Doe" required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Your Email</label>
+                <input type="email" name="Email" class="form-input" placeholder="john@example.com" required />
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Message</label>
+                <textarea name="Message" class="form-textarea" placeholder="Your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-paper-plane"></i> Send Message
+            </button>
+        </form>
+
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
+            <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1rem;">
+                Other ways to reach me:
+            </p>
+            <div style="display: flex; justify-content: center; gap: 1.5rem;">
+                <a href="mailto:cecskavinkumarm24@gmail.com" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
+                <a href="https://linkedin.com" class="btn btn-sm btn-secondary" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://github.com" class="btn btn-sm btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-info" style="margin-top: 2rem;">
+        <i class="fas fa-question-circle"></i>
+        <span>If you have any questions, feel free to contact me at <strong>cecskavinkumarm24@gmail.com</strong> or call <strong>6383728267</strong></span>
+    </div>
+</section>
+
+<script>
+function selectAll(type) {
+    document.querySelectorAll('.' + type + '-checkbox').forEach(cb => cb.checked = true);
+}
+
+function unselectAll(type) {
+    document.querySelectorAll('.' + type + '-checkbox').forEach(cb => cb.checked = false);
+}
+
+// Mobile nav toggle
+document.querySelector('.nav-toggle')?.addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+});
+
+// Active nav link
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        document.querySelector('.nav-links').classList.remove('active');
+    });
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+</script>

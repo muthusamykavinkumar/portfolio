@@ -1,0 +1,10 @@
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.csproj.AssemblyReference.cache
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\rpswa.dswa.cache.json
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.GeneratedMSBuildEditorConfig.editorconfig
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.AssemblyInfoInputs.cache
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.AssemblyInfo.cs
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.csproj.CoreCompileInputs.cache
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.MvcApplicationPartsAssemblyInfo.cache
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.RazorAssemblyInfo.cache
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.RazorAssemblyInfo.cs
+D:\html and css\kavinkumar.dev\obj\Release\net10.0\kavinkumar.dev.sourcelink.json
