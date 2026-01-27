@@ -1,7 +1,5 @@
 is_global = true
 build_property.TargetFramework = net10.0
-build_property.TargetFrameworkIdentifier = .NETCoreApp
-build_property.TargetFrameworkVersion = v10.0
 build_property.TargetPlatformMinVersion = 
 build_property.UsingMicrosoftNETSdkWeb = true
 build_property.ProjectTypeGuids = 
@@ -11,49 +9,49 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = kavinkumar.dev
 build_property.RootNamespace = kavinkumar.dev
-build_property.ProjectDir = D:\html and css\kavinkumar.dev\
+build_property.ProjectDir = D:\Kavin_2025\Personal\kavinkumar.dev\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\html and css\kavinkumar.dev
+build_property.MSBuildProjectDirectory = D:\Kavin_2025\Personal\kavinkumar.dev
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[D:/html and css/kavinkumar.dev/Views/Admin/Dashboard.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Admin/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cRGFzaGJvYXJkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/Admin/Login.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Admin/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/Home/Index.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/Home/Privacy.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/Shared/Error.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/Shared/_ValidationScriptsPartial.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/_ViewImports.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/_ViewStart.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/html and css/kavinkumar.dev/Views/Shared/_Layout.cshtml]
+[D:/Kavin_2025/Personal/kavinkumar.dev/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-luvbmzrcqh
