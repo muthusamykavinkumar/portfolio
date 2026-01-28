@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using kavinkumar.dev.Data;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace kavinkumar.dev.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CertificateApiController : ControllerBase
@@ -18,12 +20,14 @@ namespace kavinkumar.dev.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Certificate>>> GetCertificates()
         {
             return await _context.Certificates.ToListAsync();
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<ActionResult<Certificate>> GetCertificate(int id)
         {

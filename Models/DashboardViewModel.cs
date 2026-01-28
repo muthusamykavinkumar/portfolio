@@ -10,6 +10,7 @@ namespace kavinkumar.dev.Models
         public List<Certificate> Certificates { get; set; } = new();
         public List<Project> Projects { get; set; } = new();
         public List<Skill> Skills { get; set; } = new();
+        public List<Experience> Experiences { get; set; } = new();
         public List<Testimonial> Testimonials { get; set; } = new();
     }
 }

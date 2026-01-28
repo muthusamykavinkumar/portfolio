@@ -7,9 +7,7 @@ using System.Threading.Tasks;
 
 namespace kavinkumar.dev.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ContactController : ControllerBase
+    public class ContactController : Controller
     {
         private readonly PortfolioContext _context;
 
@@ -18,7 +16,35 @@ namespace kavinkumar.dev.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("Contact/Send")]
+        public async Task<IActionResult> Send([FromBody] ContactMessage message)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    // Log ModelState errors for debugging
+                    var errors = ModelState.Values.SelectMany(v => v.Errors);
+                    var errorMessage = string.Join("; ", errors.Select(e => e.ErrorMessage));
+                    System.Diagnostics.Debug.WriteLine($"ModelState Errors: {errorMessage}");
+                    System.Diagnostics.Debug.WriteLine($"Name: {message.Name}, Email: {message.Email}, Message: {message.Message}");
+                    
+                    return BadRequest(new { error = "Please fill in all required fields correctly." });
+                }
+
+                message.CreatedAt = DateTime.Now;
+                _context.ContactMessages.Add(message);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { success = true, message = "Your message has been sent successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { error = "An error occurred while sending your message. Please try again later." });
+            }
+        }
+
+        [HttpPost("api/Contact")]
         public async Task<IActionResult> Submit([FromForm] ContactMessage message)
         {
             if (!ModelState.IsValid)
@@ -33,7 +59,7 @@ namespace kavinkumar.dev.Controllers
             return Ok(new { success = true, message = "Message saved successfully!" });
         }
 
-        [HttpGet("ask-ai")]
+        [HttpGet("api/Contact/ask-ai")]
         public IActionResult AskAI([FromQuery] string query)
         {
             var q = query?.ToLower() ?? "";

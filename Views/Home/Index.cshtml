@@ -4,9 +4,9 @@
 }
 
 <div class="hero">
-    <div class="hero-content">
+    <div class="hero-content fade-up">
         <h1>Hi, I'm Kavin Kumar</h1>
-        <p>Full Stack Developer | ASP.NET Core | Cloud Technologies</p>
+        <p>Full Stack Developer | ASP.NET Core </p>
         <p style="color: var(--text-secondary); margin-bottom: 2rem;">
             Building scalable web applications and exceptional digital experiences
         </p>
@@ -17,26 +17,25 @@
             <a href="#contact" class="btn btn-outline">
                 <i class="fas fa-envelope"></i> Get in Touch
             </a>
-            <a href="/Admin/Login" class="btn btn-secondary">
+            <!-- <a href="/Admin/Login" class="btn btn-secondary">
                 <i class="fas fa-lock"></i> Admin Login
-            </a>
+            </a> -->
         </div>
     </div>
 </div>
 
 <!-- About Section -->
 <section id="about" class="section">
-    <h2 class="section-title">About Me</h2>
-    <p class="section-subtitle">Get to know me better</p>
+    <h2 class="section-title fade-up">About Me</h2>
+    <p class="section-subtitle fade-up">Get to know me better</p>
     
     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
-        <div>
+        <div class="slide-left">
             <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-secondary);">
-                I'm a passionate Full Stack Developer with expertise in building modern web applications. 
-                With experience in ASP.NET Core, C#, and cloud technologies, I create scalable and efficient solutions.
+                I am a driven and versatile <strong>Full Stack Developer</strong> dedicated to building high-quality, scalable web solutions. With deep expertise in the <strong>.NET ecosystem (ASP.NET Core, C#)</strong> and modern cloud architectures, I transform complex requirements into seamless digital experiences.
             </p>
             <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem; color: var(--text-secondary);">
-                Currently working at Sakthi Infra Tex Pvt Ltd, architecting enterprise solutions and mentoring junior developers.
+                Currently ensuring technical excellence at <strong>Sakthi Infra Tex Pvt Ltd</strong>, I specialize in architecting enterprise systems, optimizing backend performance, and advising development teams. My mission is to write clean, efficient code that not only solves today's problems but lays a robust foundation for the future.
             </p>
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
                 <a href="https://linkedin.com" class="btn btn-sm btn-primary" target="_blank">
@@ -47,9 +46,11 @@
                 </a>
             </div>
         </div>
-        <div style="text-align: center;">
-            <div style="width: 250px; height: 250px; margin: 0 auto; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 20px; display: flex; align-items: center; justify-content: center; color: white; font-size: 4rem;">
-                <i class="fas fa-user-circle"></i>
+        <div style="text-align: center;" class="slide-right">
+            <div style="position: relative; width: 280px; height: 350px; margin: 0 auto;">
+                <div style="position: absolute; inset: 0; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 20px; transform: rotate(-6deg); z-index: 1; opacity: 0.3;"></div>
+                <div style="position: absolute; inset: 0; background: var(--bg-card); border-radius: 20px; transform: rotate(6deg); z-index: 1; border: 1px solid var(--border); box-shadow: var(--shadow-lg);"></div>
+                <img src="~/images/kavin.JPG" alt="Kavin Kumar" style="position: relative; width: 100%; height: 100%; object-fit: cover; border-radius: 16px; z-index: 2; box-shadow: var(--shadow-xl);" />
             </div>
         </div>
     </div>
@@ -65,15 +66,15 @@
 
 <!-- Education Section -->
 <section id="education" class="section" style="background: var(--bg-secondary);">
-    <h2 class="section-title">Education</h2>
-    <p class="section-subtitle">Academic background and qualifications</p>
+    <h2 class="section-title fade-up">Education</h2>
+    <p class="section-subtitle fade-up">Academic background and qualifications</p>
     
     @if (Model?.Educations?.Count > 0)
     {
         <div class="card-grid">
             @foreach (var education in Model.Educations)
             {
-                <div class="card">
+                <div class="card fade-up">
                     <h3 style="color: var(--primary); margin-bottom: 0.5rem;">
                         <i class="fas fa-graduation-cap"></i> @education.Degree
                     </h3>
@@ -105,15 +106,15 @@
 
 <!-- Projects Section -->
 <section id="projects" class="section">
-    <h2 class="section-title">Featured Projects</h2>
-    <p class="section-subtitle">Showcase of my recent work</p>
+    <h2 class="section-title fade-up">Projects</h2>
+    <p class="section-subtitle fade-up">Showcase of my recent work</p>
     
     @if (Model?.Projects?.Count > 0)
     {
         <div class="card-grid">
             @foreach (var project in Model.Projects.Take(6))
             {
-                <div class="card">
+                <div class="card fade-up">
                     <h3 style="color: var(--primary); margin-bottom: 0.75rem;">
                         <i class="fas fa-project-diagram"></i> @project.Title
                     </h3>
@@ -163,29 +164,65 @@
     }
 </section>
 
+<!-- Experience Section -->
+<section id="experience" class="section">
+    <h2 class="section-title fade-up">Experience</h2>
+    <p class="section-subtitle fade-up">My professional background and experience</p>
+    
+    @if (Model?.Experiences?.Count > 0)
+    {
+        <div style="display: grid; gap: 2rem;">
+            @foreach (var exp in Model.Experiences)
+            {
+                <div class="card fade-up" @(!string.IsNullOrEmpty(exp.CompanyUrl) ? $"onclick=window.open('{exp.CompanyUrl}','_blank')" : "") style="@(!string.IsNullOrEmpty(exp.CompanyUrl) ? "cursor: pointer;" : "")">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <div>
+                            <h3 style="margin: 0;">@exp.Position</h3>
+                            <h4 style="color: var(--primary); margin: 0.5rem 0 0 0;">
+                                @exp.CompanyName
+                            </h4>
+                        </div>
+                        <span style="background: var(--primary); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
+                            @exp.Duration
+                        </span>
+                    </div>
+                    <p style="color: var(--text-secondary); margin: 0.5rem 0;">
+                        <strong>Type:</strong> @exp.CompanyType
+                    </p>
+                    <p style="color: var(--text-secondary); margin: 0.5rem 0;">
+                        <strong>Period:</strong> @exp.StartDate.ToString("MMM yyyy") - @(exp.EndDate?.ToString("MMM yyyy") ?? "Present")
+                    </p>
+                    <p style="margin-top: 1rem; line-height: 1.6;">@exp.Description</p>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <i class="fas fa-info-circle"></i>
+            <span>No experience added yet. <a href="/Admin/Login">Add from admin panel</a></span>
+        </div>
+    }
+</section>
+
 <!-- Skills Section -->
 <section id="skills" class="section" style="background: var(--bg-secondary);">
-    <h2 class="section-title">Skills & Expertise</h2>
-    <p class="section-subtitle">Technologies and tools I work with</p>
+    <h2 class="section-title fade-up">Skills</h2>
+    <p class="section-subtitle fade-up">Technologies and tools I work with</p>
     
     @if (Model?.Skills?.Count > 0)
     {
         <div class="card-grid">
             @foreach (var skill in Model.Skills)
             {
-                <div class="card">
+                <div class="card scale-in">
                     <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
                         <div style="width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem;">
                             <i class="fas fa-code"></i>
                         </div>
                         <h3>@skill.Name</h3>
                     </div>
-                    <div style="background: var(--bg-secondary); border-radius: 8px; height: 8px; overflow: hidden;">
-                        <div style="background: linear-gradient(90deg, var(--primary), var(--secondary)); height: 100%; width: @skill.ProficiencyLevel%; transition: width 0.5s ease;"></div>
-                    </div>
-                    <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
-                        Proficiency: @skill.ProficiencyLevel%
-                    </p>
                 </div>
             }
         </div>
@@ -201,50 +238,41 @@
 
 <!-- Certificates Section -->
 <section id="certificate" class="section">
-    <h2 class="section-title">Certifications</h2>
-    <p class="section-subtitle">Professional certifications and achievements</p>
+    <h2 class="section-title fade-up">Certifications</h2>
+    <p class="section-subtitle fade-up">Professional certifications and achievements</p>
     
     @if (Model?.Certificates?.Count > 0)
     {
-        <div class="table-wrapper">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th><input type="checkbox" id="selectAllCerts" class="checkbox" /></th>
-                        <th>Certificate</th>
-                        <th>Issued By</th>
-                        <th>Date</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var cert in Model.Certificates)
-                    {
-                        <tr>
-                            <td><input type="checkbox" class="cert-checkbox checkbox" /></td>
-                            <td><strong>@cert.Title</strong></td>
-                            <td>@cert.IssuedBy</td>
-                            <td>@cert.IssueDate</td>
-                            <td>
-                                @if (!string.IsNullOrEmpty(cert.CertificateUrl))
-                                {
-                                    <a href="@cert.CertificateUrl" class="btn btn-sm btn-primary" target="_blank">
-                                        <i class="fas fa-external-link-alt"></i> View
-                                    </a>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-        <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-            <button id="selectAllCertsBtn" class="btn btn-sm btn-secondary" onclick="selectAll('cert')">
-                <i class="fas fa-check-double"></i> Select All
-            </button>
-            <button id="unselectAllCertsBtn" class="btn btn-sm btn-secondary" onclick="unselectAll('cert')">
-                <i class="fas fa-times"></i> Unselect All
-            </button>
+        <div class="card-grid">
+            @foreach (var cert in Model.Certificates)
+            {
+                <div class="card scale-in" style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <div style="width: 45px; height: 45px; background: rgba(99, 102, 241, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 1.25rem;">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            @if (!string.IsNullOrEmpty(cert.CertificateUrl))
+                            {
+                                <a href="@cert.CertificateUrl" target="_blank" class="btn btn-sm btn-outline" style="border-radius: 20px; padding: 0.25rem 0.75rem; font-size: 0.8rem;">
+                                    View <i class="fas fa-external-link-alt" style="font-size: 0.7rem; margin-left: 4px;"></i>
+                                </a>
+                            }
+                        </div>
+                        
+                        <h3 style="font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.4;">@cert.Title</h3>
+                        
+                        <p style="color: var(--text-secondary); margin-bottom: 0.25rem; font-weight: 500;">
+                            @cert.IssuedBy
+                        </p>
+                    </div>
+                    
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>Issued: @cert.IssueDate.ToString("MMM yyyy")</span>
+                    </div>
+                </div>
+            }
         </div>
     }
     else
@@ -258,46 +286,107 @@
 
 <!-- Contact Section -->
 <section id="contact" class="section" style="background: var(--bg-secondary);">
-    <h2 class="section-title">Get In Touch</h2>
-    <p class="section-subtitle">Have a question or want to work together?</p>
+    <h2 class="section-title fade-up">Get In Touch</h2>
+    <p class="section-subtitle fade-up">Have a question or want to work together?</p>
     
-    @if (ViewBag.ContactSuccess != null)
+    @if (ViewBag.ContactSuccess != null || TempData["ContactSuccess"] != null)
     {
         <div class="alert alert-success" style="margin-bottom: 2rem;">
             <i class="fas fa-check-circle"></i>
-            <span>@ViewBag.ContactSuccess</span>
+            <span>@(ViewBag.ContactSuccess ?? TempData["ContactSuccess"])</span>
         </div>
     }
 
-    @if (ViewBag.ContactError != null)
+    @if (ViewBag.ContactError != null || TempData["ContactError"] != null)
     {
         <div class="alert alert-danger" style="margin-bottom: 2rem;">
             <i class="fas fa-exclamation-circle"></i>
-            <span>@ViewBag.ContactError</span>
+            <span>@(ViewBag.ContactError ?? TempData["ContactError"])</span>
         </div>
     }
 
     <div style="max-width: 600px; margin: 0 auto;">
-        <form method="post" action="/Contact/Send">
+        <form id="contactForm" class="scale-in" style="display: flex; flex-direction: column; gap: 1.5rem;">
             <div class="form-group">
                 <label class="form-label">Your Name</label>
-                <input type="text" name="Name" class="form-input" placeholder="John Doe" required />
+                <input type="text" id="contactName" class="form-input" placeholder="John Doe" required />
             </div>
 
             <div class="form-group">
                 <label class="form-label">Your Email</label>
-                <input type="email" name="Email" class="form-input" placeholder="john@example.com" required />
+                <input type="email" id="contactEmail" class="form-input" placeholder="john@example.com" required />
             </div>
 
             <div class="form-group">
                 <label class="form-label">Message</label>
-                <textarea name="Message" class="form-textarea" placeholder="Your message here..." required></textarea>
+                <textarea id="contactMessage" class="form-textarea" placeholder="Your message here..." required></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary" style="width: 100%;">
                 <i class="fas fa-paper-plane"></i> Send Message
             </button>
         </form>
+
+        <script>
+            document.getElementById('contactForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const message = document.getElementById('contactMessage').value;
+
+                try {
+                    const response = await fetch('/Contact/Send', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            email: email,
+                            message: message
+                        })
+                    });
+
+                    if (response.ok) {
+                        document.getElementById('contactName').value = '';
+                        document.getElementById('contactEmail').value = '';
+                        document.getElementById('contactMessage').value = '';
+                        
+                        // Show success message
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Message Sent!',
+                            text: 'Your message has been sent successfully!',
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'OK'
+                        });
+
+                        // Wait 5 seconds then reload page
+                        setTimeout(function() {
+                            location.reload();
+                        }, 5000);
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Error sending message. Please try again.',
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Error sending message. Please try again.',
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            });
+        </script>
 
         <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);">
             <p style="text-align: center; color: var(--text-secondary); margin-bottom: 1rem;">
@@ -324,13 +413,27 @@
 </section>
 
 <script>
-function selectAll(type) {
-    document.querySelectorAll('.' + type + '-checkbox').forEach(cb => cb.checked = true);
-}
+    // Animation Observer
+    document.addEventListener('DOMContentLoaded', () => {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-function unselectAll(type) {
-    document.querySelectorAll('.' + type + '-checkbox').forEach(cb => cb.checked = false);
-}
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up, .slide-left, .slide-right, .scale-in, .blur-in').forEach(el => {
+            observer.observe(el);
+        });
+    });
+
 
 // Mobile nav toggle
 document.querySelector('.nav-toggle')?.addEventListener('click', function() {

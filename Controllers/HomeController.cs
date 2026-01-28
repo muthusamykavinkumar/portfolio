@@ -25,6 +25,7 @@ public class HomeController : Controller
             Projects = await _context.Projects.ToListAsync(),
             Certificates = await _context.Certificates.ToListAsync(),
             Skills = await _context.Skills.ToListAsync(),
+            Experiences = await _context.Experiences.ToListAsync(),
             Testimonials = await _context.Testimonials.Where(t => t.IsApproved).ToListAsync(),
             Messages = new List<ContactMessage>() // Don't load messages on public page
         };

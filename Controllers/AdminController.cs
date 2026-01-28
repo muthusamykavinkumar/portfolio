@@ -74,6 +74,7 @@ namespace kavinkumar.dev.Controllers
                 Certificates = await _context.Certificates.ToListAsync(),
                 Projects = await _context.Projects.ToListAsync(),
                 Skills = await _context.Skills.ToListAsync(),
+                Experiences = await _context.Experiences.ToListAsync(),
                 Testimonials = await _context.Testimonials.ToListAsync()
             };
             return View(model);

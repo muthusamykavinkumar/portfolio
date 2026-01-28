@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using kavinkumar.dev.Data;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace kavinkumar.dev.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class TestimonialApiController : ControllerBase
@@ -21,7 +23,7 @@ namespace kavinkumar.dev.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Testimonial>>> GetTestimonials()
         {
-            return await _context.Testimonials.Where(t => t.IsApproved).ToListAsync();
+            return await _context.Testimonials.ToListAsync();
         }
 
         [HttpGet("{id}")]

@@ -13,8 +13,6 @@ namespace kavinkumar.dev.Models
 
         public string Icon { get; set; } = string.Empty;
 
-        public int ProficiencyLevel { get; set; } = 50;
-
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime UpdatedAt { get; set; } = DateTime.Now;
     }
